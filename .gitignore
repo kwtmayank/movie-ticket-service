@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+#### DB file ####
+movie-booking-db.mv.db
