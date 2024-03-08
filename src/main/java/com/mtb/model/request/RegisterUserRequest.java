@@ -20,6 +20,8 @@ public class RegisterUserRequest {
     @NotBlank(message = "Please provide a password")
     private String password;
 
+    private String role;
+
     private Integer userId;
 
     public Integer getUserId() {
@@ -60,5 +62,13 @@ public class RegisterUserRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

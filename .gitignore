@@ -34,3 +34,4 @@ build/
 
 #### DB file ####
 movie-booking-db.mv.db
+/src/main/resources/static/~$MTS_Database_Schema.xlsx
