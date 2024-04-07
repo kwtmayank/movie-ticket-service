@@ -12,6 +12,11 @@ public interface ApplicationConstants {
     String THEATRE_DELETED = "Theatre deleted successfully";
     String THEATRE_RETRIEVED = "Theatre retrieved successfully";
 
+    String MOVIE_CREATED = "Movie created successfully";
+    String MOVIE_UPDATED = "Movie updated successfully";
+    String MOVIE_DELETED = "Movie deleted successfully";
+    String MOVIE_RETRIEVED = "Movie retrieved successfully";
+
     //Error Messages
     String THEATRE_NOT_FOUND = "Theatre not found with the given ID";
 }

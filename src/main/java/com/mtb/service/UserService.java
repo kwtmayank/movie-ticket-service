@@ -30,7 +30,7 @@ public class UserService {
         user.setInsertTs(OffsetDateTime.now());
         user.setUpdateTs(OffsetDateTime.now());
         String role = adminUserList.contains(user.getEmail()) ? UserRole.ADMIN.name() : UserRole.NORMAL.name();
-        user.setRole(role);
+      //  user.setRoleId(role);
         return userRepository.save(user);
     }
 

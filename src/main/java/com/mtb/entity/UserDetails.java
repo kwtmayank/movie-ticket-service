@@ -20,11 +20,13 @@ public class UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
 
-    @Column(name = "PASSWORD", nullable = false)
+    @Column(name = "PASSWORD_TEXT", nullable = false)
     private String password;
 
-    @Column(name = "ROLE", nullable = false)
-    private String role;
+
+    @ManyToOne
+    @JoinColumn(name = "ROLE_ID")
+    private UserType roleId;
 
     @Column(name = "INSERT_TS", nullable = false)
     private OffsetDateTime insertTs;
@@ -80,12 +82,12 @@ public class UserDetails {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public UserType getRoleId() {
+        return roleId;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleId(UserType roleId) {
+        this.roleId = roleId;
     }
 
     public OffsetDateTime getInsertTs() {

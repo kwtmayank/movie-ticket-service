@@ -1,0 +1,3 @@
+2024-04-07 20:49:14.014662+05:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "STATUS" not found; SQL statement:
+INSERT INTO STATUS (STATUS_ID, DESC) VALUES ('CNF','Confirmed'),('CAN', 'Cancelled') [42102-224]

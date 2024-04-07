@@ -3,6 +3,7 @@ server:
   servlet:
     context-path: /movie-ticket-booking
 spring:
+  sql.init.mode: always
   session:
     store-type: jdbc
     jdbc:
@@ -10,11 +11,12 @@ spring:
   datasource:
     driverClassName: org.h2.Driver
     username: sa
-    url: jdbc:h2:file:./movie-booking-db
+    url: jdbc:h2:file:./data/movie-booking-db
   jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
-    hibernate:
-      ddl-auto: update
+    generate-ddl: true
+    hibernate.ddl-auto: create-drop
   h2:
     console:
       enabled: true

@@ -31,7 +31,7 @@ public class UserController {
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-        user.setRole(ApplicationConstants.USER_ROLE_NORMAL);
+     //   user.setRoleId(ApplicationConstants.USER_ROLE_NORMAL);
         //Calling service
         UserDetails createUser = userService.createUser(user);
         //Translate the response
@@ -40,7 +40,7 @@ public class UserController {
         response.setFirstName(createUser.getFirstName());
         response.setLastName(createUser.getLastName());
         response.setUserId(createUser.getUserId());
-        response.setRole(createUser.getRole());
+      //  response.setRole(createUser.getRoleId());
         return new Response<RegisterUser>(null, null, true, response);
     }
 

@@ -6,22 +6,20 @@ import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(name = "THEATRE_DETAILS")
-public class TheatreDetails {
+@Table(name = "SCREEN_DETAILS")
+public class ScreenDetails {
 
     @Id
-    @Column(name = "THEATRE_ID", nullable = false)
+    @Column(name = "SCREEN_ID", nullable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String theatreId;
+    private String screenId;
 
-    @Column(name = "NAME", nullable = false)
-    private String theatreName;
+    @ManyToOne
+    @JoinColumn(name = "THEATRE_ID")
+    private TheatreDetails theatreId;
 
-    @Column(name = "ADDRESS", nullable = false)
-    private String address;
-
-    @Column(name = "CITY", nullable = false)
-    private String city;
+    @Column(name = "CAPACITY")
+    private Number capacity;
 
     @Column(name = "INSERT_TS", nullable = false)
     private OffsetDateTime insertTs;
@@ -34,40 +32,33 @@ public class TheatreDetails {
 
 
 
-    public TheatreDetails() {
+    public ScreenDetails() {
 
     }
 
-    public String getTheatreId() {
+
+    public String getScreenId() {
+        return screenId;
+    }
+
+    public void setScreenId(String screenId) {
+        this.screenId = screenId;
+    }
+
+    public TheatreDetails getTheatreId() {
         return theatreId;
     }
 
-    public void setTheatreId(String theatreId) {
+    public void setTheatreId(TheatreDetails theatreId) {
         this.theatreId = theatreId;
     }
 
-    public String getTheatreName() {
-        return theatreName;
+    public Number getCapacity() {
+        return capacity;
     }
 
-    public void setTheatreName(String theatreName) {
-        this.theatreName = theatreName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
+    public void setCapacity(Number capacity) {
+        this.capacity = capacity;
     }
 
     public OffsetDateTime getInsertTs() {
