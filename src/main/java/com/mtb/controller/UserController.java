@@ -3,8 +3,8 @@ package com.mtb.controller;
 import com.mtb.entity.UserDetails;
 import com.mtb.model.ApplicationConstants;
 import com.mtb.model.Response;
-import com.mtb.model.request.LoginRequest;
-import com.mtb.model.request.RegisterUserRequest;
+import com.mtb.model.request.RegisterUser;
+import com.mtb.model.request.UserLogin;
 import com.mtb.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,8 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    Response<RegisterUserRequest> registerUser(@RequestBody @Valid RegisterUserRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    Response<RegisterUser> registerUser(@RequestBody @Valid RegisterUser request) {
         //Translate the request
         UserDetails user = new UserDetails();
         user.setFirstName(request.getFirstName());
@@ -34,29 +35,29 @@ public class UserController {
         //Calling service
         UserDetails createUser = userService.createUser(user);
         //Translate the response
-        RegisterUserRequest response = new RegisterUserRequest();
+        RegisterUser response = new RegisterUser();
         response.setEmail(createUser.getEmail());
         response.setFirstName(createUser.getFirstName());
         response.setLastName(createUser.getLastName());
         response.setUserId(createUser.getUserId());
         response.setRole(createUser.getRole());
-        return new Response<RegisterUserRequest>(null, null, true, response);
+        return new Response<RegisterUser>(null, null, true, response);
     }
 
 
     @PostMapping("/login")
-    Response<RegisterUserRequest> login(@RequestBody @Valid LoginRequest request) {
+    Response<RegisterUser> login(@RequestBody @Valid UserLogin request) {
         //Translate the request
         UserDetails loggedInUser = userService.findUserAndMatchPassword(request.getEmail(), request.getPassword());
         if (loggedInUser != null) {
-            RegisterUserRequest response = new RegisterUserRequest();
+            RegisterUser response = new RegisterUser();
             response.setEmail(loggedInUser.getEmail());
             response.setFirstName(loggedInUser.getFirstName());
             response.setLastName(loggedInUser.getLastName());
             response.setUserId(loggedInUser.getUserId());
-            return new Response<RegisterUserRequest>(null, null, true, response);
+            return new Response<RegisterUser>(null, null, true, response);
         } else {
-            return new Response<RegisterUserRequest>(HttpStatus.NOT_FOUND.name(), "User not found", false, null);
+            return new Response<RegisterUser>(HttpStatus.NOT_FOUND.name(), "User not found", false, null);
         }
     }
 

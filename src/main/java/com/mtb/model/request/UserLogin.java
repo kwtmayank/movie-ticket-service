@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public class LoginRequest{
+public class UserLogin {
     @NotNull
     @Email
     private String email;
@@ -12,11 +12,6 @@ public class LoginRequest{
     @NotNull
     @NotBlank(message = "please provide the password")
     private String password;
-
-    public LoginRequest(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
 
     public String getEmail() {
         return email;
