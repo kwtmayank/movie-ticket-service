@@ -1,14 +1,12 @@
 package com.mtb.model.request;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
-import java.time.OffsetDateTime;
 import java.util.Date;
 
 public class Movie {
 
-    private Integer id;
+    private String id;
     @NotNull
 
     private String title;
@@ -28,11 +26,11 @@ public class Movie {
     @NotNull
     private Date releaseDate;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

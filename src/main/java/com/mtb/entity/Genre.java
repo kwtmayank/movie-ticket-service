@@ -28,4 +28,12 @@ public class Genre {
     public void setGenreName(String genreName) {
         this.genreName = genreName;
     }
+
+    public Genre(String genreId, String genreName) {
+        this.genreId = genreId;
+        this.genreName = genreName;
+    }
+
+    public Genre() {
+    }
 }

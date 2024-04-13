@@ -19,4 +19,6 @@ public interface ApplicationConstants {
 
     //Error Messages
     String THEATRE_NOT_FOUND = "Theatre not found with the given ID";
+    String MOVIE_NOT_FOUND = "Movie not found with the given ID";
+    String INVALID_GENRE = "Invalid Genre value";
 }

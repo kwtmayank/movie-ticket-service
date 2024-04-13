@@ -25,12 +25,12 @@ public class MovieDetails {
     private String starring;
 
     @ManyToOne
-    @JoinColumn(name = "GENRE_ID")
-    private Genre genreId;
+    @JoinColumn(name = "GENRE")
+    private Genre genre;
 
 
     @Column(name = "DURATION", nullable = false)
-    private Number duration;
+    private Integer duration;
 
 
     @Column(name = "RATING")
@@ -86,19 +86,19 @@ public class MovieDetails {
         this.starring = starring;
     }
 
-    public Genre getGenreId() {
-        return genreId;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setGenreId(Genre genreId) {
-        this.genreId = genreId;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
-    public Number getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(Number duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

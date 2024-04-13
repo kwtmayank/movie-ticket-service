@@ -16,13 +16,22 @@ spring:
     spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
     defer-datasource-initialization: true
     generate-ddl: true
-    hibernate.ddl-auto: create-drop
+    hibernate.ddl-auto: update
   h2:
     console:
       enabled: true
 app:
   admin:
     users: kwtmayank@gmail.com
+  genres:
+    RomCom: Romantic-Comedy
+    Horror: Horror
+    Comedy: Comedy
+    Romance: Romance
+    Drama: Drama
+    Sci-Fi: Science-Fiction
+    Action: Action
+    Thriller: Thriller
 logging:
   level:
     org.springframework.web: "info"
