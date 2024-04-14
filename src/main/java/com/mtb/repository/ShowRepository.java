@@ -1,10 +1,11 @@
 package com.mtb.repository;
 
-import com.mtb.entity.MovieDetails;
+import com.mtb.entity.ShowDetails;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MovieRepository extends CrudRepository<MovieDetails, String> {
+public interface ShowRepository extends CrudRepository<ShowDetails, String> {
+
 
 }

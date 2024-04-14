@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<UserDetails, Integer> {
+public interface UserRepository extends CrudRepository<UserDetails, String> {
     /**
      * Return the user having the passed email or null if no user is found.
      *

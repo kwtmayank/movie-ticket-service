@@ -16,10 +16,10 @@ public class ScreenDetails {
 
     @ManyToOne
     @JoinColumn(name = "THEATRE_ID")
-    private TheatreDetails theatreId;
+    private TheatreDetails theatre;
 
     @Column(name = "CAPACITY")
-    private Number capacity;
+    private Integer capacity;
 
     @Column(name = "INSERT_TS", nullable = false)
     private OffsetDateTime insertTs;
@@ -45,19 +45,19 @@ public class ScreenDetails {
         this.screenId = screenId;
     }
 
-    public TheatreDetails getTheatreId() {
-        return theatreId;
+    public TheatreDetails getTheatre() {
+        return theatre;
     }
 
-    public void setTheatreId(TheatreDetails theatreId) {
-        this.theatreId = theatreId;
+    public void setTheatre(TheatreDetails theatre) {
+        this.theatre = theatre;
     }
 
-    public Number getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(Number capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 

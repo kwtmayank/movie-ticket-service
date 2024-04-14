@@ -1,7 +1,6 @@
 package com.mtb.controller;
 
 import com.mtb.entity.UserDetails;
-import com.mtb.model.ApplicationConstants;
 import com.mtb.model.Response;
 import com.mtb.model.request.RegisterUser;
 import com.mtb.model.request.UserLogin;

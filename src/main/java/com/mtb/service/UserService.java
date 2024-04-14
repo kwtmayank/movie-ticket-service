@@ -1,6 +1,7 @@
 package com.mtb.service;
 
 import com.mtb.entity.UserDetails;
+import com.mtb.exception.InvalidDataException;
 import com.mtb.model.ApplicationConstants;
 import com.mtb.model.UserRole;
 import com.mtb.repository.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -30,7 +32,7 @@ public class UserService {
         user.setInsertTs(OffsetDateTime.now());
         user.setUpdateTs(OffsetDateTime.now());
         String role = adminUserList.contains(user.getEmail()) ? UserRole.ADMIN.name() : UserRole.NORMAL.name();
-      //  user.setRoleId(role);
+        user.setRoleId(role);
         return userRepository.save(user);
     }
 
@@ -38,4 +40,11 @@ public class UserService {
         UserDetails user = userRepository.findByEmail(email).orElse(new UserDetails());
         return password.equals(user.getPassword()) ? user : null;
     }
+
+    public UserDetails getUser(String userId) throws InvalidDataException {
+        Optional<UserDetails> userDetails = Optional.ofNullable(userRepository.findById(userId)
+                .orElseThrow(() -> new InvalidDataException(ApplicationConstants.MOVIE_NOT_FOUND)));
+        return userDetails.orElse(null);
+    }
+
 }

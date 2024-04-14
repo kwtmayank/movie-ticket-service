@@ -17,16 +17,14 @@ public class UserDetails {
     private String email;
     @Id
     @Column(name = "USER_ID", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer userId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String userId;
 
     @Column(name = "PASSWORD_TEXT", nullable = false)
     private String password;
 
-
-    @ManyToOne
-    @JoinColumn(name = "ROLE_ID")
-    private UserType roleId;
+    @Column(name = "ROLE")
+    private String roleId;
 
     @Column(name = "INSERT_TS", nullable = false)
     private OffsetDateTime insertTs;
@@ -66,11 +64,11 @@ public class UserDetails {
         this.email = email;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -82,11 +80,11 @@ public class UserDetails {
         this.password = password;
     }
 
-    public UserType getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(UserType roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 

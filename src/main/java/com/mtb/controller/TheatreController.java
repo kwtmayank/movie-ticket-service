@@ -27,13 +27,8 @@ public class TheatreController {
     @PostMapping
     ResponseEntity<Response<TheatreDetails>> createTheatre(@RequestBody @Valid Theatre request) {
         logger.info("Request received to create theatre {}", request.toString());
-        //Translate Request
-        TheatreDetails newTheatre = new TheatreDetails();
-        newTheatre.setTheatreName(request.getName());
-        newTheatre.setAddress(request.getAddress());
-        newTheatre.setCity(request.getCity());
         //Calling the service
-        TheatreDetails theatreDetails = theatreService.createTheatre(newTheatre);
+        TheatreDetails theatreDetails = theatreService.createTheatre(request);
         //Handling response
         logger.info("Request completed to create theatre with {}", theatreDetails.getTheatreId());
         return ResponseEntity.ok(new Response<TheatreDetails>(null, ApplicationConstants.THEATRE_CREATED, true, theatreDetails));

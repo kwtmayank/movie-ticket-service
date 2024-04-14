@@ -55,24 +55,20 @@ public class MovieService {
     }
 
     public void deleteMovie(String movieId) throws InvalidDataException {
-        Optional<MovieDetails> movieDetails = Optional.ofNullable(movieRepository.findById(movieId)
-                .orElseThrow(() -> new InvalidDataException(ApplicationConstants.THEATRE_NOT_FOUND)));
-        movieRepository.delete(movieDetails.get());
+        movieRepository.delete(this.getMovie(movieId));
     }
 
     public MovieDetails updateMovie(Movie movie) throws InvalidDataException {
-        Optional<MovieDetails> movieDetails = Optional.ofNullable(movieRepository.findById(movie.getId())
-                .orElseThrow(() -> new InvalidDataException(ApplicationConstants.MOVIE_NOT_FOUND)));
-        movieDetails.get().setStarring(movie.getStarring());
-        movieDetails.get().setRating(movie.getRating());
-        movieDetails.get().setReleaseDate(movie.getReleaseDate());
-        movieDetails.get().setDescription(movie.getDescription());
-        movieDetails.get().setTitle(movie.getTitle());
-        movieDetails.get().setDuration(movie.getDuration());
-        movieDetails.get().setGenre(genreService.getGenre(movie.getGenre()));
-        movieDetails.get().setUpdateTs(OffsetDateTime.now());
-        movieDetails.get().setUpdateUser(ApplicationConstants.SYSTEM_USER);
-        movieRepository.save(movieDetails.get());
-        return movieDetails.get();
+        MovieDetails movieDetails = this.getMovie(movie.getId());
+        movieDetails.setStarring(movie.getStarring());
+        movieDetails.setRating(movie.getRating());
+        movieDetails.setReleaseDate(movie.getReleaseDate());
+        movieDetails.setDescription(movie.getDescription());
+        movieDetails.setTitle(movie.getTitle());
+        movieDetails.setDuration(movie.getDuration());
+        movieDetails.setGenre(genreService.getGenre(movie.getGenre()));
+        movieDetails.setUpdateTs(OffsetDateTime.now());
+        movieDetails.setUpdateUser(ApplicationConstants.SYSTEM_USER);
+        return movieRepository.save(movieDetails);
     }
 }

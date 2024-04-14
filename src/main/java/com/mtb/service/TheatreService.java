@@ -23,11 +23,15 @@ public class TheatreService {
     @Autowired
     private TheatreRepository theatreRepository;
 
-    public TheatreDetails createTheatre(TheatreDetails theatre) {
-        theatre.setUpdateUser(ApplicationConstants.SYSTEM_USER);
-        theatre.setInsertTs(OffsetDateTime.now());
-        theatre.setUpdateTs(OffsetDateTime.now());
-        return theatreRepository.save(theatre);
+    public TheatreDetails createTheatre(Theatre theatre) {
+        TheatreDetails newTheatre = new TheatreDetails();
+        newTheatre.setTheatreName(theatre.getName());
+        newTheatre.setAddress(theatre.getAddress());
+        newTheatre.setCity(theatre.getCity());
+        newTheatre.setUpdateUser(ApplicationConstants.SYSTEM_USER);
+        newTheatre.setInsertTs(OffsetDateTime.now());
+        newTheatre.setUpdateTs(OffsetDateTime.now());
+        return theatreRepository.save(newTheatre);
     }
 
     public List<TheatreDetails> getAllTheatres() {
@@ -37,21 +41,17 @@ public class TheatreService {
     }
 
     public TheatreDetails updateTheatre(Theatre theatre) throws InvalidDataException {
-        Optional<TheatreDetails> theatreDetails = Optional.ofNullable(theatreRepository.findById(theatre.getCode())
-                .orElseThrow(() -> new InvalidDataException(ApplicationConstants.THEATRE_NOT_FOUND)));
-        theatreDetails.get().setTheatreName(theatre.getName());
-        theatreDetails.get().setCity(theatre.getCity());
-        theatreDetails.get().setAddress(theatre.getAddress());
-        theatreDetails.get().setUpdateTs(OffsetDateTime.now());
-        theatreRepository.save(theatreDetails.get());
-        return theatreDetails.get();
-
+        TheatreDetails theatreDetails = this.getTheatre(theatre.getCode());
+        theatreDetails.setTheatreName(theatre.getName());
+        theatreDetails.setCity(theatre.getCity());
+        theatreDetails.setAddress(theatre.getAddress());
+        theatreDetails.setUpdateTs(OffsetDateTime.now());
+        return theatreRepository.save(theatreDetails);
     }
 
     public void deleteTheatre(String theatreId) throws InvalidDataException {
-        Optional<TheatreDetails> theatreDetails = Optional.ofNullable(theatreRepository.findById(theatreId)
-                .orElseThrow(() -> new InvalidDataException(ApplicationConstants.THEATRE_NOT_FOUND)));
-        theatreRepository.delete(theatreDetails.get());
+        TheatreDetails theatreDetails = this.getTheatre(theatreId);
+        theatreRepository.delete(theatreDetails);
     }
 
     public TheatreDetails getTheatre(String theatreId) throws InvalidDataException {
@@ -59,6 +59,5 @@ public class TheatreService {
                 .orElseThrow(() -> new InvalidDataException(ApplicationConstants.THEATRE_NOT_FOUND)));
         return theatreDetails.get();
     }
-
 
 }
