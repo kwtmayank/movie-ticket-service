@@ -1,19 +1,36 @@
-package com.mtb.model.request;
+package com.mtb.entity;
 
-import jakarta.validation.constraints.NotNull;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 
-public class Booking {
+@Document
+public class Bookings {
+
+    @Id
     private String bookingId;
-    @NotNull
+
     private String userId;
-    @NotNull
+
     private String showId;
-    @NotNull
+
     private Integer numberOfSeats;
-    @NotNull
+
+
     private Instant bookingDate;
+
+
+    private String status;
+
+
+    private Instant insertTs;
+
+
+    private Instant updateTs;
+
+    private String updateUser;
 
     public String getBookingId() {
         return bookingId;
@@ -55,14 +72,35 @@ public class Booking {
         this.bookingDate = bookingDate;
     }
 
-    @Override
-    public String toString() {
-        return "Booking{" +
-                "bookingId='" + bookingId + '\'' +
-                ", userId='" + userId + '\'' +
-                ", showId='" + showId + '\'' +
-                ", numberOfSeats=" + numberOfSeats +
-                ", bookingDate=" + bookingDate +
-                '}';
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Instant getInsertTs() {
+        return insertTs;
+    }
+
+    public void setInsertTs(Instant insertTs) {
+        this.insertTs = insertTs;
+    }
+
+    public Instant getUpdateTs() {
+        return updateTs;
+    }
+
+    public void setUpdateTs(Instant updateTs) {
+        this.updateTs = updateTs;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
     }
 }

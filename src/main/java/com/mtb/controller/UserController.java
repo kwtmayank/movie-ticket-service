@@ -1,62 +1,61 @@
 package com.mtb.controller;
 
-import com.mtb.entity.UserDetails;
+import com.mtb.entity.User;
+import com.mtb.exception.InvalidDataException;
+import com.mtb.model.ApplicationConstants;
 import com.mtb.model.Response;
+import com.mtb.model.request.LoginRequest;
 import com.mtb.model.request.RegisterUser;
-import com.mtb.model.request.UserLogin;
 import com.mtb.service.UserService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
-    UserService userService;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    UserService userService;
 
     @PostMapping("/signup")
-    @ResponseStatus(HttpStatus.CREATED)
-    Response<RegisterUser> registerUser(@RequestBody @Valid RegisterUser request) {
-        //Translate the request
-        UserDetails user = new UserDetails();
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
-     //   user.setRoleId(ApplicationConstants.USER_ROLE_NORMAL);
+    ResponseEntity<Response<User>> registerUser(@RequestBody @Valid RegisterUser request) throws InvalidDataException {
+        logger.info("Request received to create user {}", request.toString());
+        //Check if user exist
+        User existingUser = userService.getUser(request.getEmail());
+        if (existingUser != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response<>("400", ApplicationConstants.USER_ALREADY_EXIST, false, null));
+        }
         //Calling service
-        UserDetails createUser = userService.createUser(user);
+        User createUser = userService.createUser(request);
         //Translate the response
-        RegisterUser response = new RegisterUser();
-        response.setEmail(createUser.getEmail());
-        response.setFirstName(createUser.getFirstName());
-        response.setLastName(createUser.getLastName());
-        response.setUserId(createUser.getUserId());
-      //  response.setRole(createUser.getRoleId());
-        return new Response<RegisterUser>(null, null, true, response);
+        createUser.setPassword(null);
+        logger.info("Request complete to create user with {}", createUser.getEmail());
+        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.USER_CREATED, true, createUser));
     }
 
 
     @PostMapping("/login")
-    Response<RegisterUser> login(@RequestBody @Valid UserLogin request) {
+    ResponseEntity<Response<User>> login(@RequestBody @Valid LoginRequest request) throws InvalidDataException {
+        logger.info("Request received to login for user {}", request.getEmail());
         //Translate the request
-        UserDetails loggedInUser = userService.findUserAndMatchPassword(request.getEmail(), request.getPassword());
-        if (loggedInUser != null) {
-            RegisterUser response = new RegisterUser();
-            response.setEmail(loggedInUser.getEmail());
-            response.setFirstName(loggedInUser.getFirstName());
-            response.setLastName(loggedInUser.getLastName());
-            response.setUserId(loggedInUser.getUserId());
-            return new Response<RegisterUser>(null, null, true, response);
+        User loggedInUser = userService.getUser(request.getEmail());
+        if (loggedInUser.getPassword().equals(request.getPassword())) {
+            logger.info("Login Successful for user {}", request.getEmail());
+            loggedInUser.setPassword(null);
+            return ResponseEntity.ok(new Response<>(null, ApplicationConstants.USER_LOGGED_IN, true, loggedInUser));
         } else {
-            return new Response<RegisterUser>(HttpStatus.NOT_FOUND.name(), "User not found", false, null);
+            logger.error("Login failed for user {}", request.getEmail());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response<>(String.valueOf(HttpStatus.NOT_FOUND.value()), ApplicationConstants.USER_LOGIN_FAILED, false, null));
         }
     }
 

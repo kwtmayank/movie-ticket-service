@@ -22,16 +22,6 @@ public class RegisterUser {
 
     private String role;
 
-    private String userId;
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -70,5 +60,16 @@ public class RegisterUser {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "RegisterUser{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                '}';
     }
 }

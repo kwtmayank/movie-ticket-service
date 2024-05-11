@@ -1,6 +1,6 @@
 package com.mtb.controller;
 
-import com.mtb.entity.MovieDetails;
+import com.mtb.entity.Movies;
 import com.mtb.exception.InvalidDataException;
 import com.mtb.model.ApplicationConstants;
 import com.mtb.model.Response;
@@ -25,47 +25,47 @@ public class MovieController {
     MovieService movieService;
 
     @PostMapping
-    ResponseEntity<Response<MovieDetails>> createMovie(@RequestBody @Valid Movie request) throws InvalidDataException {
+    ResponseEntity<Response<Movies>> createMovie(@RequestBody @Valid Movie request) throws InvalidDataException {
         logger.info("Request received to add movie {}", request.toString());
         //Calling the service
-        MovieDetails movieDetails = movieService.createMovie(request);
+        Movies movies = movieService.createMovie(request);
         //Handling response
-        logger.info("Request completed to add movie with {}", movieDetails.getMovieId());
-        return ResponseEntity.ok(new Response<MovieDetails>(null, ApplicationConstants.MOVIE_CREATED, true, movieDetails));
+        logger.info("Request completed to add movie with {}", movies.getMovieId());
+        return ResponseEntity.ok(new Response<Movies>(null, ApplicationConstants.MOVIE_CREATED, true, movies));
     }
 
     @GetMapping("/{movieId}")
-    ResponseEntity<Response<MovieDetails>> getMovie(@PathVariable @NotNull String movieId) throws InvalidDataException, InvalidDataException {
+    ResponseEntity<Response<Movies>> getMovie(@PathVariable @NotNull String movieId) throws InvalidDataException, InvalidDataException {
         logger.info("Request received to get movie with id {}", movieId);
         //Calling the service
-        MovieDetails movieDetails = movieService.getMovie(movieId);
+        Movies movies = movieService.getMovie(movieId);
         //Handling response
         logger.info("Request completed to get movie with id {}", movieId);
-        return ResponseEntity.ok(new Response<MovieDetails>(null, ApplicationConstants.MOVIE_RETRIEVED, true, movieDetails));
+        return ResponseEntity.ok(new Response<Movies>(null, ApplicationConstants.MOVIE_RETRIEVED, true, movies));
     }
 
     @GetMapping
-    ResponseEntity<Response<List<MovieDetails>>> getAllMovies() {
+    ResponseEntity<Response<List<Movies>>> getAllMovies() {
         logger.info("Request received to get all movies");
         //Calling the service
-        List<MovieDetails> movieDetails = movieService.getAllMovies();
+        List<Movies> movies = movieService.getAllMovies();
         //Handling response
         logger.info("Request completed to get all movies");
-        return ResponseEntity.ok(new Response<List<MovieDetails>>(null, ApplicationConstants.MOVIE_RETRIEVED, true, movieDetails));
+        return ResponseEntity.ok(new Response<List<Movies>>(null, ApplicationConstants.MOVIE_RETRIEVED, true, movies));
     }
 
 
     @PutMapping
-    ResponseEntity<Response<MovieDetails>> updateMovie(@RequestBody @Valid Movie movie) throws InvalidDataException {
+    ResponseEntity<Response<Movies>> updateMovie(@RequestBody @Valid Movie movie) throws InvalidDataException {
         logger.info("Request received to update movie {}", movie.getId());
         if (movie.getId() == null || movie.getId().isBlank()) {
             throw new InvalidDataException(ApplicationConstants.MOVIE_NOT_FOUND);
         }
         //Calling the service
-        MovieDetails movieDetails = movieService.updateMovie(movie);
+        Movies movies = movieService.updateMovie(movie);
         //Handling response
         logger.info("Request completed to update movie {}", movie.getId());
-        return ResponseEntity.ok(new Response<MovieDetails>(null, ApplicationConstants.MOVIE_UPDATED, true, movieDetails));
+        return ResponseEntity.ok(new Response<Movies>(null, ApplicationConstants.MOVIE_UPDATED, true, movies));
     }
 
     @DeleteMapping("/{movieId}")

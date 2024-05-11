@@ -1,6 +1,6 @@
 package com.mtb.service;
 
-import com.mtb.entity.MovieDetails;
+import com.mtb.entity.Movies;
 import com.mtb.exception.InvalidDataException;
 import com.mtb.model.ApplicationConstants;
 import com.mtb.model.request.Movie;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,48 +27,48 @@ public class MovieService {
     private GenreService genreService;
 
 
-    public List<MovieDetails> getAllMovies() {
-        List<MovieDetails> movieDetailsList = new ArrayList<MovieDetails>();
-        movieRepository.findAll().iterator().forEachRemaining(movieDetailsList::add);
-        return movieDetailsList;
+    public List<Movies> getAllMovies() {
+        List<Movies> MoviesList = new ArrayList<Movies>();
+        movieRepository.findAll().iterator().forEachRemaining(MoviesList::add);
+        return MoviesList;
     }
 
-    public MovieDetails createMovie(Movie movie) throws InvalidDataException {
-        MovieDetails newMovie = new MovieDetails();
+    public Movies createMovie(Movie movie) throws InvalidDataException {
+        Movies newMovie = new Movies();
         newMovie.setTitle(movie.getTitle());
         newMovie.setStarring(movie.getStarring());
         newMovie.setDescription(movie.getDescription());
         newMovie.setDuration(movie.getDuration());
         newMovie.setRating(movie.getRating());
         newMovie.setReleaseDate(movie.getReleaseDate());
-        newMovie.setGenre(genreService.getGenre(movie.getGenre()));
+        newMovie.setGenre(genreService.getGenre(movie.getGenre()).getGenreId());
         newMovie.setUpdateUser(ApplicationConstants.SYSTEM_USER);
-        newMovie.setInsertTs(OffsetDateTime.now());
-        newMovie.setUpdateTs(OffsetDateTime.now());
+        newMovie.setInsertTs(Instant.now());
+        newMovie.setUpdateTs(Instant.now());
         return movieRepository.save(newMovie);
     }
 
-    public MovieDetails getMovie(String movieId) throws InvalidDataException {
-        Optional<MovieDetails> movieDetails = Optional.ofNullable(movieRepository.findById(movieId)
+    public Movies getMovie(String movieId) throws InvalidDataException {
+        Optional<Movies> Movies = Optional.ofNullable(movieRepository.findById(movieId)
                 .orElseThrow(() -> new InvalidDataException(ApplicationConstants.MOVIE_NOT_FOUND)));
-        return movieDetails.get();
+        return Movies.get();
     }
 
     public void deleteMovie(String movieId) throws InvalidDataException {
         movieRepository.delete(this.getMovie(movieId));
     }
 
-    public MovieDetails updateMovie(Movie movie) throws InvalidDataException {
-        MovieDetails movieDetails = this.getMovie(movie.getId());
-        movieDetails.setStarring(movie.getStarring());
-        movieDetails.setRating(movie.getRating());
-        movieDetails.setReleaseDate(movie.getReleaseDate());
-        movieDetails.setDescription(movie.getDescription());
-        movieDetails.setTitle(movie.getTitle());
-        movieDetails.setDuration(movie.getDuration());
-        movieDetails.setGenre(genreService.getGenre(movie.getGenre()));
-        movieDetails.setUpdateTs(OffsetDateTime.now());
-        movieDetails.setUpdateUser(ApplicationConstants.SYSTEM_USER);
-        return movieRepository.save(movieDetails);
+    public Movies updateMovie(Movie movie) throws InvalidDataException {
+        Movies Movies = this.getMovie(movie.getId());
+        Movies.setStarring(movie.getStarring());
+        Movies.setRating(movie.getRating());
+        Movies.setReleaseDate(movie.getReleaseDate());
+        Movies.setDescription(movie.getDescription());
+        Movies.setTitle(movie.getTitle());
+        Movies.setDuration(movie.getDuration());
+        Movies.setGenre(genreService.getGenre(movie.getGenre()).getGenreId());
+        Movies.setUpdateTs(Instant.now());
+        Movies.setUpdateUser(ApplicationConstants.SYSTEM_USER);
+        return movieRepository.save(Movies);
     }
 }

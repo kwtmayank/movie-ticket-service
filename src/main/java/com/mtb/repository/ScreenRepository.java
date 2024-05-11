@@ -1,13 +1,13 @@
 package com.mtb.repository;
 
-import com.mtb.entity.ScreenDetails;
-import com.mtb.entity.TheatreDetails;
-import org.springframework.data.repository.CrudRepository;
+import com.mtb.entity.Screens;
+import com.mtb.entity.Theatres;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface ScreenRepository extends CrudRepository<ScreenDetails, String> {
-    public Optional<ScreenDetails> findByTheatre(TheatreDetails theatreDetails);
+public interface ScreenRepository extends MongoRepository<Screens, String> {
+    public Optional<Screens> findByTheatre(Theatres theatreDetails);
 }

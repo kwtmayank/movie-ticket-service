@@ -1,8 +1,9 @@
 package com.mtb.model.request;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 public class Show {
     private String showId;
@@ -12,7 +13,8 @@ public class Show {
     @NotNull
     private String screenId;
     @NotNull
-    private OffsetDateTime showTime;
+    @JsonDeserialize(using = LocalDateTimeSerializer.class)
+    private Instant showTiming;
 
     public String getShowId() {
         return showId;
@@ -46,12 +48,12 @@ public class Show {
         this.screenId = screenId;
     }
 
-    public OffsetDateTime getShowTime() {
-        return showTime;
+    public @NotNull Instant getShowTiming() {
+        return showTiming;
     }
 
-    public void setShowTime(OffsetDateTime showTime) {
-        this.showTime = showTime;
+    public void setShowTiming(Instant showTiming) {
+        this.showTiming = showTiming;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class Show {
                 ", description='" + description + '\'' +
                 ", movieId='" + movieId + '\'' +
                 ", screenId='" + screenId + '\'' +
-                ", showTime=" + showTime +
+                ", showTime=" + showTiming +
                 '}';
     }
 }

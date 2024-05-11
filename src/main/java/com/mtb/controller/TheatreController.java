@@ -1,6 +1,6 @@
 package com.mtb.controller;
 
-import com.mtb.entity.TheatreDetails;
+import com.mtb.entity.Theatres;
 import com.mtb.exception.InvalidDataException;
 import com.mtb.model.ApplicationConstants;
 import com.mtb.model.Response;
@@ -25,44 +25,44 @@ public class TheatreController {
     TheatreService theatreService;
 
     @PostMapping
-    ResponseEntity<Response<TheatreDetails>> createTheatre(@RequestBody @Valid Theatre request) {
+    ResponseEntity<Response<Theatres>> createTheatre(@RequestBody @Valid Theatre request) {
         logger.info("Request received to create theatre {}", request.toString());
         //Calling the service
-        TheatreDetails theatreDetails = theatreService.createTheatre(request);
+        Theatres theatres = theatreService.createTheatre(request);
         //Handling response
-        logger.info("Request completed to create theatre with {}", theatreDetails.getTheatreId());
-        return ResponseEntity.ok(new Response<TheatreDetails>(null, ApplicationConstants.THEATRE_CREATED, true, theatreDetails));
+        logger.info("Request completed to create theatre with {}", theatres.getTheatreId());
+        return ResponseEntity.ok(new Response<Theatres>(null, ApplicationConstants.THEATRE_CREATED, true, theatres));
     }
 
     @GetMapping("/{theatreId}")
-    ResponseEntity<Response<TheatreDetails>> getTheatre(@PathVariable @NotNull String theatreId) throws InvalidDataException {
+    ResponseEntity<Response<Theatres>> getTheatre(@PathVariable @NotNull String theatreId) throws InvalidDataException {
         logger.info("Request received to get theatre with id {}", theatreId);
         //Calling the service
-        TheatreDetails theatreDetails = theatreService.getTheatre(theatreId);
+        Theatres theatres = theatreService.getTheatre(theatreId);
         //Handling response
         logger.info("Request completed to get theatre with id {}", theatreId);
-        return ResponseEntity.ok(new Response<TheatreDetails>(null, ApplicationConstants.THEATRE_RETRIEVED, true, theatreDetails));
+        return ResponseEntity.ok(new Response<Theatres>(null, ApplicationConstants.THEATRE_RETRIEVED, true, theatres));
     }
 
     @GetMapping
-    ResponseEntity<Response<List<TheatreDetails>>> getAllTheaters() {
+    ResponseEntity<Response<List<Theatres>>> getAllTheaters() {
         logger.info("Request received to get all theatres");
         //Calling the service
-        List<TheatreDetails> theatreDetails = theatreService.getAllTheatres();
+        List<Theatres> theatres = theatreService.getAllTheatres();
         //Handling response
         logger.info("Request completed to get all theatres");
-        return ResponseEntity.ok(new Response<List<TheatreDetails>>(null, ApplicationConstants.THEATRE_RETRIEVED, true, theatreDetails));
+        return ResponseEntity.ok(new Response<List<Theatres>>(null, ApplicationConstants.THEATRE_RETRIEVED, true, theatres));
     }
 
 
     @PutMapping
-    ResponseEntity<Response<TheatreDetails>> updateTheatre(@RequestBody @Valid Theatre theatre) throws InvalidDataException {
+    ResponseEntity<Response<Theatres>> updateTheatre(@RequestBody @Valid Theatre theatre) throws InvalidDataException {
         logger.info("Request received to update theatre {}", theatre.getCode());
         //Calling the service
-        TheatreDetails updatedTheatre = theatreService.updateTheatre(theatre);
+        Theatres updatedTheatre = theatreService.updateTheatre(theatre);
         //Handling response
         logger.info("Request completed to update theatre {}", theatre.getCode());
-        return ResponseEntity.ok(new Response<TheatreDetails>(null, ApplicationConstants.THEATRE_UPDATED, true, updatedTheatre));
+        return ResponseEntity.ok(new Response<Theatres>(null, ApplicationConstants.THEATRE_UPDATED, true, updatedTheatre));
     }
 
     @DeleteMapping("/{theatreId}")

@@ -1,6 +1,6 @@
 package com.mtb.service;
 
-import com.mtb.entity.TheatreDetails;
+import com.mtb.entity.Theatres;
 import com.mtb.exception.InvalidDataException;
 import com.mtb.model.ApplicationConstants;
 import com.mtb.model.request.Theatre;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,41 +23,41 @@ public class TheatreService {
     @Autowired
     private TheatreRepository theatreRepository;
 
-    public TheatreDetails createTheatre(Theatre theatre) {
-        TheatreDetails newTheatre = new TheatreDetails();
+    public Theatres createTheatre(Theatre theatre) {
+        Theatres newTheatre = new Theatres();
         newTheatre.setTheatreName(theatre.getName());
         newTheatre.setAddress(theatre.getAddress());
         newTheatre.setCity(theatre.getCity());
         newTheatre.setUpdateUser(ApplicationConstants.SYSTEM_USER);
-        newTheatre.setInsertTs(OffsetDateTime.now());
-        newTheatre.setUpdateTs(OffsetDateTime.now());
+        newTheatre.setInsertTs(Instant.now());
+        newTheatre.setUpdateTs(Instant.now());
         return theatreRepository.save(newTheatre);
     }
 
-    public List<TheatreDetails> getAllTheatres() {
-        List<TheatreDetails> theatreDetailsList = new ArrayList<TheatreDetails>();
-        theatreRepository.findAll().forEach(theatreDetailsList::add);
-        return theatreDetailsList;
+    public List<Theatres> getAllTheatres() {
+        List<Theatres> theatresList = new ArrayList<>();
+        theatreRepository.findAll().forEach(theatresList::add);
+        return theatresList;
     }
 
-    public TheatreDetails updateTheatre(Theatre theatre) throws InvalidDataException {
-        TheatreDetails theatreDetails = this.getTheatre(theatre.getCode());
-        theatreDetails.setTheatreName(theatre.getName());
-        theatreDetails.setCity(theatre.getCity());
-        theatreDetails.setAddress(theatre.getAddress());
-        theatreDetails.setUpdateTs(OffsetDateTime.now());
-        return theatreRepository.save(theatreDetails);
+    public Theatres updateTheatre(Theatre theatre) throws InvalidDataException {
+        Theatres theatres = this.getTheatre(theatre.getCode());
+        theatres.setTheatreName(theatre.getName());
+        theatres.setCity(theatre.getCity());
+        theatres.setAddress(theatre.getAddress());
+        theatres.setUpdateTs(Instant.now());
+        return theatreRepository.save(theatres);
     }
 
     public void deleteTheatre(String theatreId) throws InvalidDataException {
-        TheatreDetails theatreDetails = this.getTheatre(theatreId);
-        theatreRepository.delete(theatreDetails);
+        Theatres theatres = this.getTheatre(theatreId);
+        theatreRepository.delete(theatres);
     }
 
-    public TheatreDetails getTheatre(String theatreId) throws InvalidDataException {
-        Optional<TheatreDetails> theatreDetails = Optional.ofNullable(theatreRepository.findById(theatreId)
+    public Theatres getTheatre(String theatreId) throws InvalidDataException {
+        Optional<Theatres> theatres = Optional.ofNullable(theatreRepository.findById(theatreId)
                 .orElseThrow(() -> new InvalidDataException(ApplicationConstants.THEATRE_NOT_FOUND)));
-        return theatreDetails.get();
+        return theatres.get();
     }
 
 }

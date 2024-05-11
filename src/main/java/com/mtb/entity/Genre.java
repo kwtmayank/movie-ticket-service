@@ -1,19 +1,14 @@
 package com.mtb.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name = "GENRE")
+@Document
 public class Genre {
     @Id
-    @Column(name = "GENRE_ID", nullable = false)
     private String genreId;
 
-    @Column(name = "NAME", nullable = false)
     private String genreName;
 
     public String getGenreId() {

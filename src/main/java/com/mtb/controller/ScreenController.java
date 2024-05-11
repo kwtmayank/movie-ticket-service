@@ -1,6 +1,6 @@
 package com.mtb.controller;
 
-import com.mtb.entity.ScreenDetails;
+import com.mtb.entity.Screens;
 import com.mtb.exception.InvalidDataException;
 import com.mtb.model.ApplicationConstants;
 import com.mtb.model.Response;
@@ -25,44 +25,44 @@ public class ScreenController {
     ScreenService screenService;
 
     @PostMapping
-    ResponseEntity<Response<ScreenDetails>> createScreen(@RequestBody @Valid Screen request) throws InvalidDataException {
+    ResponseEntity<Response<Screens>> createScreen(@RequestBody @Valid Screen request) throws InvalidDataException {
         logger.info("Request received to create screen {}", request.toString());
         //Calling the service
-        ScreenDetails screenDetails = screenService.createScreen(request);
+        Screens screens = screenService.createScreen(request);
         //Handling response
-        logger.info("Request completed to create screen with {}", screenDetails.getScreenId());
-        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.SCREEN_CREATED, true, screenDetails));
+        logger.info("Request completed to create screen with {}", screens.getScreenId());
+        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.SCREEN_CREATED, true, screens));
     }
 
     @GetMapping("/{screenId}")
-    ResponseEntity<Response<ScreenDetails>> getScreen(@PathVariable @NotNull String screenId) throws InvalidDataException {
+    ResponseEntity<Response<Screens>> getScreen(@PathVariable @NotNull String screenId) throws InvalidDataException {
         logger.info("Request received to get screen with id {}", screenId);
         //Calling the service
-        ScreenDetails screenDetails = screenService.getScreen(screenId);
+        Screens screens = screenService.getScreen(screenId);
         //Handling response
         logger.info("Request completed to get screen with id {}", screenId);
-        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.SCREEN_RETRIEVED, true, screenDetails));
+        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.SCREEN_RETRIEVED, true, screens));
     }
 
     @GetMapping
-    ResponseEntity<Response<List<ScreenDetails>>> getAllScreens() {
+    ResponseEntity<Response<List<Screens>>> getAllScreens() {
         logger.info("Request received to get all screens");
         //Calling the service
-        List<ScreenDetails> screenDetails = screenService.getAllScreens();
+        List<Screens> screens = screenService.getAllScreens();
         //Handling response
         logger.info("Request completed to get all screens");
-        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.SCREEN_RETRIEVED, true, screenDetails));
+        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.SCREEN_RETRIEVED, true, screens));
     }
 
 
     @PutMapping
-    ResponseEntity<Response<ScreenDetails>> updateScreen(@RequestBody @Valid Screen screen) throws InvalidDataException {
+    ResponseEntity<Response<Screens>> updateScreen(@RequestBody @Valid Screen screen) throws InvalidDataException {
         logger.info("Request received to update screen {}", screen.getScreenId());
         if (screen.getScreenId() == null || screen.getScreenId().isBlank()) {
             throw new InvalidDataException(ApplicationConstants.SCREEN_NOT_FOUND);
         }
         //Calling the service
-        ScreenDetails updatedScreen = screenService.updateScreen(screen);
+        Screens updatedScreen = screenService.updateScreen(screen);
         //Handling response
         logger.info("Request completed to update screen {}", screen.getScreenId());
         return ResponseEntity.ok(new Response<>(null, ApplicationConstants.SCREEN_UPDATED, true, updatedScreen));

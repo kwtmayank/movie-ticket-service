@@ -34,6 +34,11 @@ public interface ApplicationConstants {
     String BOOKING_DELETED = "Booking deleted successfully";
     String BOOKING_RETRIEVED = "Booking retrieved successfully";
 
+    String USER_CREATED = "User created successfully";
+    String USER_LOGGED_IN = "User logged in successfully";
+    String USER_LOGIN_FAILED = "Invalid user id or password";
+    String USER_ALREADY_EXIST = "User already exist with this email";
+
     //Error Messages
     String THEATRE_NOT_FOUND = "Theatre not found with the given ID";
     String MOVIE_NOT_FOUND = "Movie not found with the given ID";

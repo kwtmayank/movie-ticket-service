@@ -1,6 +1,6 @@
 package com.mtb.controller;
 
-import com.mtb.entity.BookingDetails;
+import com.mtb.entity.Bookings;
 import com.mtb.exception.InvalidDataException;
 import com.mtb.model.ApplicationConstants;
 import com.mtb.model.Response;
@@ -25,44 +25,44 @@ public class BookingController {
     BookingService bookingService;
 
     @PostMapping
-    ResponseEntity<Response<BookingDetails>> createBooking(@RequestBody @Valid Booking request) throws InvalidDataException {
+    ResponseEntity<Response<Bookings>> createBooking(@RequestBody @Valid Booking request) throws InvalidDataException {
         logger.info("Request received to create booking {}", request.toString());
         //Calling the service
-        BookingDetails bookingDetails = bookingService.createBooking(request);
+        Bookings bookings = bookingService.createBooking(request);
         //Handling response
-        logger.info("Request completed to create booking with {}", bookingDetails.getBookingId());
-        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.BOOKING_CREATED, true, bookingDetails));
+        logger.info("Request completed to create booking with {}", bookings.getBookingId());
+        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.BOOKING_CREATED, true, bookings));
     }
 
     @GetMapping("/{bookingId}")
-    ResponseEntity<Response<BookingDetails>> getBooking(@PathVariable @NotNull String bookingId) throws InvalidDataException {
+    ResponseEntity<Response<Bookings>> getBooking(@PathVariable @NotNull String bookingId) throws InvalidDataException {
         logger.info("Request received to get booking with id {}", bookingId);
         //Calling the service
-        BookingDetails bookingDetails = bookingService.getBooking(bookingId);
+        Bookings bookings = bookingService.getBooking(bookingId);
         //Handling response
         logger.info("Request completed to get show with id {}", bookingId);
-        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.BOOKING_RETRIEVED, true, bookingDetails));
+        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.BOOKING_RETRIEVED, true, bookings));
     }
 
     @GetMapping
-    ResponseEntity<Response<List<BookingDetails>>> getAllBookings() {
+    ResponseEntity<Response<List<Bookings>>> getAllBookings() {
         logger.info("Request received to get all bookings");
         //Calling the service
-        List<BookingDetails> bookingDetails = bookingService.getAllBookings();
+        List<Bookings> bookings = bookingService.getAllBookings();
         //Handling response
         logger.info("Request completed to get all bookings");
-        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.BOOKING_RETRIEVED, true, bookingDetails));
+        return ResponseEntity.ok(new Response<>(null, ApplicationConstants.BOOKING_RETRIEVED, true, bookings));
     }
 
 
     @PutMapping
-    ResponseEntity<Response<BookingDetails>> updateBooking(@RequestBody @Valid Booking booking) throws InvalidDataException {
+    ResponseEntity<Response<Bookings>> updateBooking(@RequestBody @Valid Booking booking) throws InvalidDataException {
         logger.info("Request received to update booking {}", booking.getBookingId());
         if (booking.getBookingId() == null || booking.getBookingId().isBlank()) {
             throw new InvalidDataException(ApplicationConstants.INVALID_BOOKING);
         }
         //Calling the service
-        BookingDetails updatedShow = bookingService.updateBooking(booking);
+        Bookings updatedShow = bookingService.updateBooking(booking);
         //Handling response
         logger.info("Request completed to update booking {}", booking.getBookingId());
         return ResponseEntity.ok(new Response<>(null, ApplicationConstants.BOOKING_UPDATED, true, updatedShow));

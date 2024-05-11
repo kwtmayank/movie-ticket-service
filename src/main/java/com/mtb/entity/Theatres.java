@@ -1,42 +1,28 @@
 package com.mtb.entity;
 
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
-@Entity
-@Table(name = "THEATRE_DETAILS")
-public class TheatreDetails {
+@Document
+public class Theatres {
 
     @Id
-    @Column(name = "THEATRE_ID", nullable = false)
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String theatreId;
-
-    @Column(name = "NAME", nullable = false)
+    
     private String theatreName;
-
-    @Column(name = "ADDRESS", nullable = false)
+    
     private String address;
-
-    @Column(name = "CITY", nullable = false)
+    
     private String city;
-
-    @Column(name = "INSERT_TS", nullable = false)
-    private OffsetDateTime insertTs;
-
-    @Column(name = "UPDATE_TS", nullable = false)
-    private OffsetDateTime updateTs;
-
-    @Column(name = "UPDATE_USER", nullable = false)
+    
+    private Instant insertTs;
+    
+    private Instant updateTs;
+    
     private String updateUser;
-
-
-
-    public TheatreDetails() {
-
-    }
 
     public String getTheatreId() {
         return theatreId;
@@ -70,19 +56,19 @@ public class TheatreDetails {
         this.city = city;
     }
 
-    public OffsetDateTime getInsertTs() {
+    public Instant getInsertTs() {
         return insertTs;
     }
 
-    public void setInsertTs(OffsetDateTime insertTs) {
+    public void setInsertTs(Instant insertTs) {
         this.insertTs = insertTs;
     }
 
-    public OffsetDateTime getUpdateTs() {
+    public Instant getUpdateTs() {
         return updateTs;
     }
 
-    public void setUpdateTs(OffsetDateTime updateTs) {
+    public void setUpdateTs(Instant updateTs) {
         this.updateTs = updateTs;
     }
 

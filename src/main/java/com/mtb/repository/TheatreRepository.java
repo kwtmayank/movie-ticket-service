@@ -1,10 +1,10 @@
 package com.mtb.repository;
 
-import com.mtb.entity.TheatreDetails;
-import org.springframework.data.repository.CrudRepository;
+import com.mtb.entity.Theatres;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TheatreRepository extends CrudRepository<TheatreDetails, String> {
+public interface TheatreRepository extends MongoRepository<Theatres, String> {
 
 }

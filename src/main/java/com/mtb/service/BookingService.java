@@ -1,6 +1,6 @@
 package com.mtb.service;
 
-import com.mtb.entity.BookingDetails;
+import com.mtb.entity.Bookings;
 import com.mtb.exception.InvalidDataException;
 import com.mtb.model.ApplicationConstants;
 import com.mtb.model.request.Booking;
@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,44 +29,44 @@ public class BookingService {
     private ShowService showService;
 
 
-    public BookingDetails getBooking(String bookingId) throws InvalidDataException {
-        Optional<BookingDetails> bookingDetails = Optional.ofNullable(bookingRepository.findById(bookingId)
+    public Bookings getBooking(String bookingId) throws InvalidDataException {
+        Optional<Bookings> bookings = Optional.ofNullable(bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new InvalidDataException(ApplicationConstants.INVALID_BOOKING)));
-        return bookingDetails.orElse(null);
+        return bookings.orElse(null);
     }
 
-    public BookingDetails createBooking(Booking booking) throws InvalidDataException {
-        BookingDetails bookingDetails = new BookingDetails();
-        bookingDetails.setBookingDate(booking.getBookingDate());
-        bookingDetails.setShowId(showService.getShow(booking.getShowId()));
-        bookingDetails.setUserId(userService.getUser(booking.getUserId()));
-        bookingDetails.setNumberOfSeats(booking.getNumberOfSeats());
-        bookingDetails.setStatusId(ApplicationConstants.STATUS_CONFIRM);
-        bookingDetails.setUpdateUser(ApplicationConstants.SYSTEM_USER);
-        bookingDetails.setInsertTs(OffsetDateTime.now());
-        bookingDetails.setUpdateTs(OffsetDateTime.now());
-        return bookingRepository.save(bookingDetails);
+    public Bookings createBooking(Booking booking) throws InvalidDataException {
+        Bookings bookings = new Bookings();
+        bookings.setBookingDate(booking.getBookingDate());
+        bookings.setShowId(showService.getShow(booking.getShowId()).getShowId());
+        bookings.setUserId(userService.getUser(booking.getUserId()).getEmail());
+        bookings.setNumberOfSeats(booking.getNumberOfSeats());
+        bookings.setStatus(ApplicationConstants.STATUS_CONFIRM);
+        bookings.setUpdateUser(ApplicationConstants.SYSTEM_USER);
+        bookings.setInsertTs(Instant.now());
+        bookings.setUpdateTs(Instant.now());
+        return bookingRepository.save(bookings);
     }
 
-    public BookingDetails updateBooking(Booking booking) throws InvalidDataException {
-        BookingDetails bookingDetails = this.getBooking(booking.getBookingId());
-        bookingDetails.setBookingDate(booking.getBookingDate());
-        bookingDetails.setShowId(showService.getShow(booking.getShowId()));
-        bookingDetails.setUserId(userService.getUser(booking.getUserId()));
-        bookingDetails.setNumberOfSeats(booking.getNumberOfSeats());
-        bookingDetails.setStatusId(ApplicationConstants.STATUS_CONFIRM);
-        bookingDetails.setUpdateTs(OffsetDateTime.now());
-        return bookingRepository.save(bookingDetails);
+    public Bookings updateBooking(Booking booking) throws InvalidDataException {
+        Bookings bookings = this.getBooking(booking.getBookingId());
+        bookings.setBookingDate(booking.getBookingDate());
+        bookings.setShowId(showService.getShow(booking.getShowId()).getShowId());
+        bookings.setUserId(userService.getUser(booking.getUserId()).getEmail());
+        bookings.setNumberOfSeats(booking.getNumberOfSeats());
+        bookings.setStatus(ApplicationConstants.STATUS_CONFIRM);
+        bookings.setUpdateTs(Instant.now());
+        return bookingRepository.save(bookings);
     }
 
     public void deleteBooking(String bookingId) throws InvalidDataException {
         bookingRepository.delete(this.getBooking(bookingId));
     }
 
-    public List<BookingDetails> getAllBookings() {
-        List<BookingDetails> bookingDetails = new ArrayList<>();
-        bookingRepository.findAll().forEach(bookingDetails::add);
-        return bookingDetails;
+    public List<Bookings> getAllBookings() {
+        List<Bookings> bookings = new ArrayList<>();
+        bookingRepository.findAll().forEach(bookings::add);
+        return bookings;
     }
 
 

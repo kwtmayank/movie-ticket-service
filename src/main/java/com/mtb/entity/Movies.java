@@ -1,58 +1,37 @@
 package com.mtb.entity;
 
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.Date;
 
-@Entity
-@Table(name = "MOVIE_DETAILS")
-public class MovieDetails {
+@Document(collection = "movies")
+public class Movies {
 
     @Id
-    @Column(name = "MOVIE_ID", nullable = false)
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String movieId;
 
-    @Column(name = "TITLE", nullable = false)
     private String title;
 
-    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "STARRING")
     private String starring;
 
-    @ManyToOne
-    @JoinColumn(name = "GENRE")
-    private Genre genre;
+    private String genre;
 
-
-    @Column(name = "DURATION", nullable = false)
     private Integer duration;
 
-
-    @Column(name = "RATING")
     private Double rating;
 
-    @Column(name = "RELEASE_DATE", nullable = false)
     private Date releaseDate;
 
-    @Column(name = "INSERT_TS", nullable = false)
-    private OffsetDateTime insertTs;
+    private Instant insertTs;
 
-    @Column(name = "UPDATE_TS", nullable = false)
-    private OffsetDateTime updateTs;
+    private Instant updateTs;
 
-    @Column(name = "UPDATE_USER", nullable = false)
     private String updateUser;
-
-
-
-    public MovieDetails() {
-
-    }
 
     public String getMovieId() {
         return movieId;
@@ -86,11 +65,11 @@ public class MovieDetails {
         this.starring = starring;
     }
 
-    public Genre getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
@@ -118,19 +97,19 @@ public class MovieDetails {
         this.releaseDate = releaseDate;
     }
 
-    public OffsetDateTime getInsertTs() {
+    public Instant getInsertTs() {
         return insertTs;
     }
 
-    public void setInsertTs(OffsetDateTime insertTs) {
+    public void setInsertTs(Instant insertTs) {
         this.insertTs = insertTs;
     }
 
-    public OffsetDateTime getUpdateTs() {
+    public Instant getUpdateTs() {
         return updateTs;
     }
 
-    public void setUpdateTs(OffsetDateTime updateTs) {
+    public void setUpdateTs(Instant updateTs) {
         this.updateTs = updateTs;
     }
 
